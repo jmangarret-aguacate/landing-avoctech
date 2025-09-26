@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVOCTECHS - Soluciones Tecnológicas</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand logo text-glow" href="#inicio">
+                AVOCTECHS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">{{ texts.nav_inicio }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#servicios">{{ texts.nav_servicios }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">{{ texts.nav_contacto }}</a></li>
+                    <!-- Selector de Idioma -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-globe"></i> {{ LANGUAGES[current_lang] }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                            {% for lang_code, lang_name in LANGUAGES.items() %}
+                            <li><a class="dropdown-item" href="/{{ lang_code }}">{{ lang_name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección de Inicio (Hero) -->
+    <header id="inicio" class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold animate-on-scroll">{{ texts.hero_titulo }}</h1>
+            <p class="lead my-4 animate-on-scroll" style="animation-delay: 0.2s;">{{ texts.hero_subtitulo }}</p>
+            <a href="#contacto" class="btn btn-primary btn-lg animate-on-scroll" style="animation-delay: 0.4s;">{{ texts.hero_boton }}</a>
+        </div>
+    </header>
+
+    <!-- Sección de Servicios -->
+    <section id="servicios" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5 animate-on-scroll">
+                <h2 class="fw-bold">{{ texts.servicios_titulo }}</h2>
+                <p class="text-muted">{{ texts.servicios_subtitulo }}</p>
+            </div>
+            <div class="row">
+                <!-- Servicio 1 -->
+                <div class="col-lg-4 mb-4 animate-on-scroll">
+                    <div class="card service-card h-100 text-center">
+                        <div class="card-body">
+                            <div class="icon-circle mx-auto mb-4">
+                                <i class="fas fa-headset service-icon"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">{{ texts.s1_titulo }}</h5>
+                            <p class="card-text">{{ texts.s1_desc }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Servicio 2 -->
+                <div class="col-lg-4 mb-4 animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="card service-card h-100 text-center">
+                        <div class="card-body">
+                            <div class="icon-circle mx-auto mb-4">
+                                <i class="fab fa-aws service-icon"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">{{ texts.s2_titulo }}</h5>
+                            <p class="card-text">{{ texts.s2_desc }}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Servicio 3 -->
+                <div class="col-lg-4 mb-4 animate-on-scroll" style="animation-delay: 0.4s;">
+                    <div class="card service-card h-100 text-center">
+                        <div class="card-body">
+                            <div class="icon-circle mx-auto mb-4">
+                                <i class="fas fa-code service-icon"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">{{ texts.s3_titulo }}</h5>
+                            <p class="card-text">{{ texts.s3_desc }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">{{ texts.contacto_titulo }}</h2>
+                <p class="text-muted">{{ texts.contacto_subtitulo }}</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="contactForm" action="/contact" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">{{ texts.form_nombre }}</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="company" class="form-label">{{ texts.form_empresa }}</label>
+                            <input type="text" class="form-control" id="company" name="company">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">{{ texts.form_email }}</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">{{ texts.form_telefono }}</label>
+                            <input type="tel" class="form-control" id="phone" name="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">{{ texts.form_mensaje }}</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">{{ texts.form_boton }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer bg-dark text-white text-center py-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 AVOCTECHS. {{ texts.footer_derechos }}</p>
+            <p class="mb-0">
+                <a href="mailto:info@avoctechs.com" class="text-white text-decoration-none">info@avoctechs.com</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
